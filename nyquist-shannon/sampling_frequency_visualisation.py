@@ -15,6 +15,7 @@ from manim import (
     MathTex,
     Rectangle,
     ReplacementTransform,
+    FadeTransform,
     Scene,
     VGroup,
     Write,
@@ -231,10 +232,10 @@ class SamplingFrequencyVisualisation(Scene):
 
             self.play(
                 ReplacementTransform(samples, new_samples),
-                ReplacementTransform(sampled_spectrum, new_sampled_spectrum),
-                ReplacementTransform(nyquist, new_nyquist),
-                ReplacementTransform(fs_text, new_fs_text),
-                ReplacementTransform(status, new_status),
+                FadeTransform(sampled_spectrum, new_sampled_spectrum),
+                FadeTransform(nyquist, new_nyquist),
+                FadeTransform(fs_text, new_fs_text),
+                FadeTransform(status, new_status),
                 run_time=2.0,
             )
 
