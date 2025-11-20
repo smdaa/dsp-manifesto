@@ -158,6 +158,15 @@ class SamplingFrequencyVisualisation(Scene):
 
             return X_s
 
+        def spectrum_discontinuities(fs):
+            edges = []
+            k_min = int(np.floor((F_MIN - B) / fs)) - 1
+            k_max = int(np.ceil((F_MAX + B) / fs)) + 1
+            for k in range(k_min, k_max + 1):
+                edges.extend([k * fs - B, k * fs + B])
+            # keep only those inside plotting window
+            return [e for e in edges if F_MIN < e < F_MAX]
+
         def make_sampled_spectrum(fs):
             X_s = compute_sampled_spectrum(fs)
             return freq_axes.plot(
@@ -166,6 +175,7 @@ class SamplingFrequencyVisualisation(Scene):
                 color=SPECTRUM_COLOR,
                 stroke_width=4,
                 use_smoothing=False,
+                discontinuities=spectrum_discontinuities(fs),
             )
 
         def make_nyquist_markers(fs):
@@ -215,9 +225,9 @@ class SamplingFrequencyVisualisation(Scene):
 
         self.play(FadeIn(samples), run_time=1.0)
         self.play(
-            ReplacementTransform(original_spectrum, sampled_spectrum),
+            FadeTransform(original_spectrum, sampled_spectrum),
             FadeIn(nyquist),
-            Write(fs_text),
+            FadeIn(fs_text),
             FadeIn(status),
             run_time=2.0,
         )
@@ -231,7 +241,7 @@ class SamplingFrequencyVisualisation(Scene):
             new_status = make_status_text(new_fs)
 
             self.play(
-                ReplacementTransform(samples, new_samples),
+                FadeTransform(samples, new_samples),
                 FadeTransform(sampled_spectrum, new_sampled_spectrum),
                 FadeTransform(nyquist, new_nyquist),
                 FadeTransform(fs_text, new_fs_text),
@@ -246,5 +256,6 @@ class SamplingFrequencyVisualisation(Scene):
             status = new_status
 
             self.wait(2.0)
+
 
         self.wait(2.0)
