@@ -6,7 +6,6 @@ import cvxpy as cp
 np.random.seed(42)
 plt.rcParams.update(
     {
-        "figure.figsize": (10, 5),
         "axes.grid": True,
         "grid.alpha": 0.5,
     }
@@ -96,7 +95,7 @@ axs[0].legend()
 axs[1].plot(orig_freq, orig_dct_norm, alpha=0.75, label="Original")
 axs[1].plot(orig_freq, cs_x_l2_norm, "--", label="Recovered (L2)")
 axs[1].set_title("DCT domain")
-axs[1].set_ylabel("Normalized |DCT|")
+axs[1].set_xlabel("Frequency (Hz)")
 axs[1].legend()
 
 # L1 recovery
