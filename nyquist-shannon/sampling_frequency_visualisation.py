@@ -14,7 +14,6 @@ from manim import (
     Line,
     MathTex,
     Rectangle,
-    ReplacementTransform,
     FadeTransform,
     Scene,
     VGroup,
